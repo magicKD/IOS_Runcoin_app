@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <script src="myEth.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+        
+        function getPublicKeyByPrivateKey(privateKey){
+            try {
+                // var EthCrypto = new EthCrypto();
+                return EthCrypto.publicKeyByPrivateKey(privateKey);
+            } catch (error) {
+                return error;
+            }
+        }
+
+        function publicToAddress(publicKey){
+            return EthCrypto.publicToAddress(publicKey);
+        }
+
+        function createIdentity(){
+            var obj = EthCrypto.createIdentity();
+            return JSON.stringify(obj);
+        }
+
+        //Signs the hash with the privateKey. Returns the signature as hex-string.
+        function sign(privateKey, message){
+            var messageHash = EthCrypto.hash.keccak256(message);
+            var signature = EthCrypto.sign(
+                privateKey, messageHash
+            );
+            return signature;
+        }
+
+        //Recovers the signers address from the signature.
+        function recover(signature, message){
+            var messageHash = EthCrypto.hash.keccak256(message);
+            var signer = EthCrypto.recover(
+                signature, messageHash
+            );
+            return signer;
+        }
+
+        </script>
+    </body>
+</html>
